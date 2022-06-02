@@ -1,31 +1,4 @@
 ﻿@page
-@using System.Data.SqlClient;
-
+@model MyStore.Pages.Clients.DeleteModel
 @{
-	try
-	{
-		String id = Request.Query["id"];
-
-		String connectionString = "Data Source=DESKTOP-8Q6GC19;Initial Catalog=mystore;Integrated Security=True";
-
-		using ( SqlConnection connection = new SqlConnection(connectionString) )
-		{
-			connection.Open();
-
-			String SqlQuery = "DELETE FROM clients WHERE id=@id";
-
-			using (SqlCommand command = new SqlCommand(SqlQuery, connection) )
-			{
-				command.Parameters.AddWithValue("@id", id);
-
-				command.ExecuteNonQuery();
-			}
-		}
-	}
-	catch(Exception ex)
-	{
-		Console.WriteLine(ex.Message);
-	}
-
-	Response.Redirect("/Clients/Index");
 }

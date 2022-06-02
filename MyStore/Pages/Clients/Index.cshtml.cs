@@ -1,18 +1,26 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 
 namespace MyStore.Pages.Clients
 {
     public class IndexModel : PageModel
     {
         public List<ClientInfo> listClients = new List<ClientInfo>();
+
+        private IConfigurationRoot Configuration;
+
+        public IndexModel(IConfiguration configRoot){
+            Configuration = (IConfigurationRoot)configRoot;
+        }
         public void OnGet()
         {
             try
             {
-                String connectionString = "Data Source=DESKTOP-8Q6GC19;Initial Catalog=mystore;Integrated Security=True";
-                using (SqlConnection connection = new SqlConnection(connectionString) )
+               
+                String conneStr = this.Configuration.GetConnectionString("DefaultConnection");
+
+                using (SqlConnection connection = new SqlConnection(conneStr) )
                 {
                     connection.Open();
 
@@ -48,11 +56,11 @@ namespace MyStore.Pages.Clients
 
     public class ClientInfo
     {
-        public string id;
-        public string name;
-        public string email;
-        public string phone;
-        public string address;
-        public string created_at;
+        public string id="";
+        public string name="";
+        public string email="";
+        public string phone = "";
+        public string address = "";
+        public string created_at = "";
     }
 }

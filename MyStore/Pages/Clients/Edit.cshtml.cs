@@ -4,12 +4,16 @@ using System.Data.SqlClient;
 
 namespace MyStore.Pages.Clients
 {
-    public class IditModel : PageModel
+    public class EditModel : PageModel
     {
         public ClientInfo clientInfo = new ClientInfo();
         public String errorMessage = "";
         public String sucessMessage = "";
-        private String connectionString = "Data Source=DESKTOP-8Q6GC19;Initial Catalog=mystore;Integrated Security=True";
+
+        private IConfigurationRoot Configuration;
+        public EditModel(IConfiguration configRoot){
+            Configuration = (IConfigurationRoot)configRoot;
+        }
 
         public void OnGet()
         {
@@ -17,8 +21,10 @@ namespace MyStore.Pages.Clients
 
             try
             {
-             
-                using (SqlConnection connection = new SqlConnection(connectionString))
+
+
+                String conneStr = this.Configuration.GetConnectionString("DefaultConnection");
+                using (SqlConnection connection = new SqlConnection(conneStr))
                 {
                     connection.Open();
                     String SqlQuery = "SELECT * FROM clients WHERE id=@id";
@@ -64,8 +70,10 @@ namespace MyStore.Pages.Clients
 
             try
             {
-              
-                using (SqlConnection connection = new SqlConnection(connectionString))
+
+                String conneStr = this.Configuration.GetConnectionString("DefaultConnection");
+
+                using (SqlConnection connection = new SqlConnection(conneStr))
                 {
                     connection.Open();
                     String SqlQuery = "UPDATE clients " +

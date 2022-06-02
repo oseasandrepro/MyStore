@@ -9,6 +9,12 @@ namespace MyStore.Pages.Clients
         public ClientInfo clientInfo = new ClientInfo();
         public string errorMessage = "";
         public string sucessMessage = "";
+
+        private IConfigurationRoot Configuration;
+        public CreateModel(IConfiguration configRoot){
+            Configuration = (IConfigurationRoot)configRoot;
+        }
+
         public void OnGet()
         {
         }
@@ -31,8 +37,9 @@ namespace MyStore.Pages.Clients
 
             try
             {
-                String connectionString = "Data Source=DESKTOP-8Q6GC19;Initial Catalog=mystore;Integrated Security=True";
-                using (SqlConnection connection = new SqlConnection(connectionString) )
+                String conneStr = this.Configuration.GetConnectionString("DefaultConnection");
+
+                using (SqlConnection connection = new SqlConnection(conneStr) )
                 {
                     connection.Open();
                     String SqlQuery =   "INSERT INTO clients" +
