@@ -31,7 +31,7 @@ namespace MyStore.Pages.Clients
 
             try
             {
-                String connectionString = "Data Source=SIF-8;Initial Catalog=MyStore;Integrated Security=True";
+                String connectionString = "Data Source=DESKTOP-8Q6GC19;Initial Catalog=mystore;Integrated Security=True";
                 using (SqlConnection connection = new SqlConnection(connectionString) )
                 {
                     connection.Open();
